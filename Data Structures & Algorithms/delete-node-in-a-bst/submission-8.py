@@ -1,0 +1,40 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def find(self,cur):
+        node = cur
+        while node.left:
+            node = node.left
+        return node
+
+
+
+    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+        if not root:
+            print("Not root")
+            return None
+        if key < root.val:
+            print("val < root.val")
+            root.left = self.deleteNode(root.left, key)
+        elif key > root.val:
+            print(f"key({key}) > root.val({root.val})")
+            root.right = self.deleteNode(root.right, key)
+        else:
+            print("val == root.val")
+            
+            if not root.left:
+                print("Not left")
+                root = root.right
+            elif not root.right:
+                print("Not left")
+                root = root.left
+            else:
+                cur = self.find(root.right)
+                root.val = cur.val
+                root.right = self.deleteNode(root.right,root.val)
+        return root
+        
